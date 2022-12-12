@@ -1,11 +1,14 @@
 package org.generation.italy.demo;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.generation.italy.demo.pojo.Drink;
 import org.generation.italy.demo.pojo.Pizzeria;
+import org.generation.italy.demo.pojo.Promotion;
 import org.generation.italy.demo.serv.DrinkService;
 import org.generation.italy.demo.serv.PizzeriaService;
+import org.generation.italy.demo.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -19,6 +22,8 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 	
 	@Autowired
 	private DrinkService drinkService;
+	
+	@Autowired PromotionService promotionService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
@@ -27,12 +32,21 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		//Creazione promozioni
+	    Promotion pr1 = new Promotion(LocalDate.of(2022, 12, 23),LocalDate.of(2023, 01, 15), "Promozione di fine anno");
+		Promotion pr2 = new Promotion(LocalDate.of(2023, 04, 14),LocalDate.of(2023, 05, 29), "Promozione di primavera");
+		Promotion pr3 = new Promotion(LocalDate.of(2023, 06, 01),LocalDate.of(2023, 10, 25), "Promozione estive");
+				
+		promotionService.save(pr1);
+		promotionService.save(pr2);
+		promotionService.save(pr3);
+		
 		//Creazione pizze
-		Pizzeria p1 = new Pizzeria("Da Ciccio", "https://garage.pizza/wp-content/uploads/2020/01/DSCF3889-2560x2560.jpeg", 15, "Una delle pizze più buone che ci sia, gustosa e saporita.");
-		Pizzeria p2 = new Pizzeria("La più buona", "https://garage.pizza/wp-content/uploads/2020/12/DSCF3442-2560x2560.jpg", 12, "Non si può rifiutare una pizza del genere, solo gusto.");
-		Pizzeria p3 = new Pizzeria("Bufalina", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/800px-Eq_it-na_pizza-margherita_sep2005_sml.jpg", 10, "Pura mozzarella di bufala, una delizia.");
-		Pizzeria p4 = new Pizzeria("Toccasana", "https://garage.pizza/wp-content/uploads/2020/10/DSCF6160-2560x2560.jpeg", 18, "Un vero e proprio toccasana, restituisce solo dolci sapori.");
-		Pizzeria p5 = new Pizzeria("Vegetariana", "https://www.scattidigusto.it/wp-content/uploads/2021/07/pizzeria-50-Kalo-Ciro-Salvo-Napoli-pizza-Nerano.jpg", 13, "Se vuoi mantenerti leggero è la pizza giusta.");
+		Pizzeria p1 = new Pizzeria("Da Ciccio", "https://garage.pizza/wp-content/uploads/2020/01/DSCF3889-2560x2560.jpeg", 15, "Una delle pizze più buone che ci sia, gustosa e saporita.", pr2);
+		Pizzeria p2 = new Pizzeria("La più buona", "https://garage.pizza/wp-content/uploads/2020/12/DSCF3442-2560x2560.jpg", 12, "Non si può rifiutare una pizza del genere, solo gusto.", pr2);
+		Pizzeria p3 = new Pizzeria("Bufalina", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/800px-Eq_it-na_pizza-margherita_sep2005_sml.jpg", 10, "Pura mozzarella di bufala, una delizia.", pr3);
+		Pizzeria p4 = new Pizzeria("Toccasana", "https://garage.pizza/wp-content/uploads/2020/10/DSCF6160-2560x2560.jpeg", 18, "Un vero e proprio toccasana, restituisce solo dolci sapori.", pr1);
+		Pizzeria p5 = new Pizzeria("Vegetariana", "https://www.scattidigusto.it/wp-content/uploads/2021/07/pizzeria-50-Kalo-Ciro-Salvo-Napoli-pizza-Nerano.jpg", 13, "Se vuoi mantenerti leggero è la pizza giusta.", pr1);
 		
 		pizzeriaService.save(p1);
 		pizzeriaService.save(p2);
@@ -60,5 +74,34 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		//Leggiamo i nostri drinks
 		List<Drink> drinks = drinkService.findAll();
 		System.out.println(drinks);
+		
+		//Delete
+		promotionService.deleteById(1);
+		//pizzeriaService.deleteById(1);
+		
+		System.out.println("------------------------------------------");
+		
+		List<Pizzeria> pizzas = pizzeriaService.findAll();
+		for(Pizzeria pizza : pizzas) {
+			System.err.println(pizza.getPromotion());
+		}
+		
+		
+		System.out.println("------------------------------------------");
+		
+        List<Promotion> promotions = promotionService.findAllWithPizza();
+		
+		for(Promotion promotion : promotions) {
+			
+			System.err.println(promotion);
+			
+			for(Pizzeria pizza : promotion.getPizze()) {
+				
+				System.err.println("\t" + pizza);
+			}
+		}
+		
+		System.out.println("------------------------------------------");
+		
 	}
 }
