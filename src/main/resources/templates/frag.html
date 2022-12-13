@@ -123,6 +123,9 @@
       <h3 class="pt-3 pb-3">Descrizione</h3>
       <span>[[*{description}]]</span>
       <h4 class="pt-3">Prezzo: [[*{price}]] €</h4> 
+      <div class="p-4">
+         <span>Promozioni attive: [[*{promotion.name}]]</span>
+      </div>
 	</div>
 	
 	<div class="container" th:fragment="priceAbleInts(prts)" th:each="priceAbleInt : ${prts}" th:object="${priceAbleInt}">
