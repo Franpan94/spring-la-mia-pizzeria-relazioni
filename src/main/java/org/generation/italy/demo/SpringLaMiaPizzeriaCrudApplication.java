@@ -35,7 +35,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		//Creazione promozioni
 	    Promotion pr1 = new Promotion(LocalDate.of(2022, 12, 23),LocalDate.of(2023, 01, 15), "Promozione di fine anno");
 		Promotion pr2 = new Promotion(LocalDate.of(2023, 04, 14),LocalDate.of(2023, 05, 29), "Promozione di primavera");
-		Promotion pr3 = new Promotion(LocalDate.of(2023, 06, 01),LocalDate.of(2023, 10, 25), "Promozione estive");
+		Promotion pr3 = new Promotion(LocalDate.of(2023, 06, 01),LocalDate.of(2023, 10, 25), "Promozioni estive");
 				
 		promotionService.save(pr1);
 		promotionService.save(pr2);
@@ -76,7 +76,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		System.out.println(drinks);
 		
 		//Delete
-		promotionService.deleteById(1);
+		//promotionService.deleteById(1);
 		//pizzeriaService.deleteById(1);
 		
 		System.out.println("------------------------------------------");
