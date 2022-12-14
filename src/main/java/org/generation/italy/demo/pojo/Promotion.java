@@ -22,18 +22,18 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @NotNull
+    @NotNull(message = "La data di inizio promozione deve essere inserita")
     @Column
     private LocalDate startDate;
     
-    @NotNull
+    @NotNull(message = "La data di fine promozione deve essere inserita")
     @Column
     private LocalDate finishDate;
     
     @OneToMany(mappedBy = "promotion", cascade = CascadeType.REMOVE)
     private List<Pizzeria> pizze;
     
-    @NotEmpty
+    @NotEmpty(message = "Il nome deve contenere qualcosa")
     @Column
     String name;
     

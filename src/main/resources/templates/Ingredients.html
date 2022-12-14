@@ -9,10 +9,10 @@
 </head>
 
 <body>
-<h1 class="text-center p-3">Promozioni</h1>
+<h1 class="text-center p-3">Ingredienti</h1>
 <div class="text-center pb-3">
       <button class="btn btn-dark">
-        <a style="text-decoration: none" class="text-white" href="/promotion/create">Aggiungi la tua nuova promozione</a>
+        <a style="text-decoration: none" class="text-white" href="/ingredient/create">Aggiungi i tuoi nuovi ingredienti</a>
       </button>
    </div>
    <div class="container">
@@ -22,22 +22,27 @@
               <thead>
                 <tr>
                   <th scope="col">Id</th>
-                  <th scope="col">Nome</th>
-                  <th scope="col" class="text-center">Pizze in promozione</th>
-                  <th class="text-end" scope="col">Data inizio/Data fine</th>
+                  <th scope="col">Ingredienti</th>
+                  <th scope="col" class="text-center">Pizze</th>
+                  <th scope="col" class="text-end">Modifica/Elimina</th>
                 </tr>
               </thead>
               <tbody>
-                 <tr  th:each="promotion : ${promotions}" th:object="${promotion}">
+                 <tr th:each="ingredient : ${ingredients}" th:object="${ingredient}">
                     <th scope="row">[[*{id}]]</th>
                     <td>
                        <span>[[*{name}]]</span>
                     </td>
                     <td class="text-center">
-						<span  th:each="pizza : ${promotion.pizze}">  [[${pizza.name}]], </span>
+						<span class="text-center" th:each="pizza : ${ingredient.pizze}">  [[${pizza.name}]], </span>
 					</td>
                     <td class="text-end">
-                       <span>[[*{startDate}]] / [[*{finishDate}]]</span>
+                       <button class="btn btn-warning">
+                         <a style="text-decoration: none" class="text-dark ms_text_decoration" th:href="@{/ingredient/edit/{id} (id=*{id})}">Modifica i tuoi ingredienti</a>
+                       </button>
+                       <button class="btn btn-danger">
+                         <a style="text-decoration: none" class="text-white ms_text_decoration" th:href="@{/ingredient/delete/{id} (id=*{id})}">Elimina</a>
+                       </button>
                      </td>
                      
                  </tr>
@@ -46,7 +51,7 @@
          </div>
       </div>
    </div>
-   <div class="text-center">
+   <div class="text-center pb-3">
       <button class="btn btn-dark">
         <a style="text-decoration: none" class="text-white" href="/">Home</a>
       </button>

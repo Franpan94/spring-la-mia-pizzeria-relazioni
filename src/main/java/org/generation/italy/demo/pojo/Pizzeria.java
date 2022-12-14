@@ -1,8 +1,6 @@
 package org.generation.italy.demo.pojo;
 
-
-
-
+import java.util.List;
 
 import org.generation.italy.demo.inter.PriceableInt;
 
@@ -13,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
@@ -40,8 +39,11 @@ public class Pizzeria implements PriceableInt {
 	private String img;
 	
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn
 	private Promotion promotion;
+
+	@ManyToMany
+	private List<Ingredient> ingredients;
 
 	@NotNull(message="Il prezzo deve avere un valore compreso tra 6 e 30")
 	@Min(value=6, message="Il prezzo deve avere un valore maggiore o uguale a 6")
@@ -58,12 +60,27 @@ public class Pizzeria implements PriceableInt {
 		
 	}
 	
-	public Pizzeria(String name, String img, int price, String description, Promotion promotion) {
+	public Pizzeria(String name, String img, int price, String description) {
 		setName(name);
 		setImg(img);
 		setPrice(price);
 		setDescription(description);
+	}
+	
+	public Pizzeria(String name, String img, int price, String description, List<Ingredient> ingredients) {
+		this(name, img, price, description);
+		setIngredients(ingredients);
+	}
+	
+	public Pizzeria(String name, String img, int price, String description, Promotion promotion) {
+		this(name, img, price, description);
 		setPromotion(promotion);
+	}
+	
+	public Pizzeria(String name, String img, int price, String description, Promotion promotion, List<Ingredient> ingredients) {
+		this(name, img, price, description);
+		setPromotion(promotion);
+		setIngredients(ingredients);
 	}
 
 	public String getDescription() {
@@ -106,6 +123,13 @@ public class Pizzeria implements PriceableInt {
 	}
     public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
+	}
+    public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 	
 	@Override

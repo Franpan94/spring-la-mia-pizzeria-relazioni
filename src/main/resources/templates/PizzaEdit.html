@@ -20,6 +20,16 @@
             <form method="POST" action="/pizza/update" th:object="${pizza}">
                <input type="number" name="id" th:field="*{id}" style="display:none">
                <div th:replace="frag :: form()"></div>
+               <label>Promozione:</label><br>
+               <select name="promotion" class="mb-3">
+		          <option th:value="null">Nessuna promozione</option>
+			      <option th:each="promotion : ${promotions}"
+					      th:object="${promotion}"
+					      th:value="*{id}"
+					      th:field="${pizza.promotion}"
+			      >[[*{name}]]
+			      </option>		
+	           </select> 
                <div class="text-center">
                   <button type="submit" class="btn btn-warning text-black">Modifica</button>
                   <button type="submit" class="btn btn-success">

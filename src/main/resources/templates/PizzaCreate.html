@@ -16,43 +16,17 @@
       <div class="row">
          <div class="col">
              <form method="POST" action="/pizza/store" th:object="${pizza}">
-                <div class="mb-3">
-         <label for="exampleInputEmail1" class="form-label">Nome</label>
-         <input type="text" name="name" class="form-control" id="exampleInputEmail1" 
-          aria-describedby="emailHelp" th:field="*{name}"
-         >
-     </div>
-     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Immagine</label>
-        <input type="text" name="img" class="form-control" id="exampleInputEmail1" 
-         aria-describedby="emailHelp" th:field="*{img}"
-        >
-     </div>
-     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Descrzione</label>
-        <input type="text" name="description" class="form-control" id="exampleInputEmail1" 
-         aria-describedby="emailHelp" th:field="*{description}"
-        >
-     </div>
-     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Prezzo</label>
-        <input type="number" name="price" class="form-control" id="exampleInputEmail1" 
-         aria-describedby="emailHelp" th:field="*{price}"
-        >
-     </div> 
-      
-      <label>Promozione</label>
-					<select name="promotion" class="mb-3">
-						<option
-							th:each="promotion : ${promotions}"
-							th:object="${promotion}"
-							
-							th:value="*{id}"
-							th:field="${pizza.promotion}"
-						>
-							[[*{name}]]
-						</option>
-					</select>          
+                <div th:replace="frag :: form()"></div>
+                <label>Promozione:</label><br>
+                <select name="promotion" class="mb-3">
+		          <option th:value="null">Nessuna promozione</option>
+			      <option th:each="promotion : ${promotions}"
+					      th:object="${promotion}"
+					      th:value="*{id}"
+					      th:field="${pizza.promotion}"
+			      >[[*{name}]]
+			      </option>		
+	            </select> 
                 <div class="pt-3 text-center">
                    <button type="submit" class="btn btn-primary text-white">Aggiungi</button>
                    <button class="btn btn-success text-white"> 

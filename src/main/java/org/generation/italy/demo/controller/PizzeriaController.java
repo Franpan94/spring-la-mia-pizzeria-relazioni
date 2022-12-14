@@ -62,7 +62,7 @@ public class PizzeriaController {
 		Pizzeria pizza = new Pizzeria();
 		model.addAttribute("pizza", pizza);
 		
-		List<Promotion> promotions = promotionService.findAll();
+		List<Promotion> promotions = promotionService.findAllWithPizza();
 		model.addAttribute("promotions", promotions);
 		
 		return "PizzaCreate";
@@ -103,6 +103,9 @@ public class PizzeriaController {
 		Optional<Pizzeria> optPizza = pizzeriaService.findPizzaId(id);
 		Pizzeria pizza = optPizza.get();
 		model.addAttribute("pizza", pizza);
+		
+		List<Promotion> promotions = promotionService.findAllWithPizza();
+		model.addAttribute("promotions", promotions);
 		
 		return "PizzaEdit";
 	}

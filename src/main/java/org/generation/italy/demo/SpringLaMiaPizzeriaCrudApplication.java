@@ -1,12 +1,15 @@
 package org.generation.italy.demo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.generation.italy.demo.pojo.Drink;
+import org.generation.italy.demo.pojo.Ingredient;
 import org.generation.italy.demo.pojo.Pizzeria;
 import org.generation.italy.demo.pojo.Promotion;
 import org.generation.italy.demo.serv.DrinkService;
+import org.generation.italy.demo.serv.IngredientService;
 import org.generation.italy.demo.serv.PizzeriaService;
 import org.generation.italy.demo.serv.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,9 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 	private DrinkService drinkService;
 	
 	@Autowired PromotionService promotionService;
+	
+	@Autowired 
+	private IngredientService ingredientService ;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
@@ -41,12 +47,62 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		promotionService.save(pr2);
 		promotionService.save(pr3);
 		
+		Ingredient i1 = new Ingredient("Salame piccante");
+		Ingredient i2 = new Ingredient("Salame dolce");
+		Ingredient i3 = new Ingredient("Prosciutto cotto");
+		Ingredient i4 = new Ingredient("Prosciutto crudo");
+		Ingredient i5 = new Ingredient("Mozzarella");
+		Ingredient i6 = new Ingredient("Rucola");
+		Ingredient i7 = new Ingredient("Funghi");
+		Ingredient i8 = new Ingredient("Insalata");
+		Ingredient i9 = new Ingredient("Kebab");
+		Ingredient i10 = new Ingredient("Scamorza affumicata");
+		
+		List<Ingredient> ingr1 = new ArrayList<>();
+		ingr1.add(i1);
+		ingr1.add(i2);
+		ingr1.add(i3);
+		ingr1.add(i4);
+		
+		List<Ingredient> ingr2 = new ArrayList<>();
+		ingr2.add(i10);
+		ingr2.add(i2);
+		ingr2.add(i5);
+		ingr2.add(i6);
+		
+		List<Ingredient> ingr3 = new ArrayList<>();
+		ingr3.add(i5);
+		ingr3.add(i7);
+		ingr3.add(i3);
+		ingr3.add(i8);
+		ingr3.add(i9);
+		
+		List<Ingredient> ingr4 = new ArrayList<>();
+		ingr4.add(i6);
+		ingr4.add(i9);
+		ingr4.add(i10);
+		
+		List<Ingredient> ingr5 = new ArrayList<>();
+		ingr5.add(i8);
+		
+
+		ingredientService.save(i1);
+		ingredientService.save(i2);
+		ingredientService.save(i3);
+		ingredientService.save(i4);
+		ingredientService.save(i5);
+		ingredientService.save(i6);
+		ingredientService.save(i7);
+		ingredientService.save(i8);
+		ingredientService.save(i9);
+		ingredientService.save(i10);
+		
 		//Creazione pizze
-		Pizzeria p1 = new Pizzeria("Da Ciccio", "https://garage.pizza/wp-content/uploads/2020/01/DSCF3889-2560x2560.jpeg", 15, "Una delle pizze più buone che ci sia, gustosa e saporita.", pr2);
-		Pizzeria p2 = new Pizzeria("La più buona", "https://garage.pizza/wp-content/uploads/2020/12/DSCF3442-2560x2560.jpg", 12, "Non si può rifiutare una pizza del genere, solo gusto.", pr2);
-		Pizzeria p3 = new Pizzeria("Bufalina", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/800px-Eq_it-na_pizza-margherita_sep2005_sml.jpg", 10, "Pura mozzarella di bufala, una delizia.", pr3);
-		Pizzeria p4 = new Pizzeria("Toccasana", "https://garage.pizza/wp-content/uploads/2020/10/DSCF6160-2560x2560.jpeg", 18, "Un vero e proprio toccasana, restituisce solo dolci sapori.", pr1);
-		Pizzeria p5 = new Pizzeria("Vegetariana", "https://www.scattidigusto.it/wp-content/uploads/2021/07/pizzeria-50-Kalo-Ciro-Salvo-Napoli-pizza-Nerano.jpg", 13, "Se vuoi mantenerti leggero è la pizza giusta.", pr1);
+		Pizzeria p1 = new Pizzeria("Da Ciccio", "https://garage.pizza/wp-content/uploads/2020/01/DSCF3889-2560x2560.jpeg", 15, "Una delle pizze più buone che ci sia, gustosa e saporita.", pr2, ingr1);
+		Pizzeria p2 = new Pizzeria("La più buona", "https://garage.pizza/wp-content/uploads/2020/12/DSCF3442-2560x2560.jpg", 12, "Non si può rifiutare una pizza del genere, solo gusto.", pr2, ingr2);
+		Pizzeria p3 = new Pizzeria("Bufalina", "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg/800px-Eq_it-na_pizza-margherita_sep2005_sml.jpg", 10, "Pura mozzarella di bufala, una delizia.", pr3, ingr3);
+		Pizzeria p4 = new Pizzeria("Toccasana", "https://garage.pizza/wp-content/uploads/2020/10/DSCF6160-2560x2560.jpeg", 18, "Un vero e proprio toccasana, restituisce solo dolci sapori.", pr1, ingr4);
+		Pizzeria p5 = new Pizzeria("Vegetariana", "https://www.scattidigusto.it/wp-content/uploads/2021/07/pizzeria-50-Kalo-Ciro-Salvo-Napoli-pizza-Nerano.jpg", 13, "Se vuoi mantenerti leggero è la pizza giusta.", pr1, ingr5);
 		
 		pizzeriaService.save(p1);
 		pizzeriaService.save(p2);

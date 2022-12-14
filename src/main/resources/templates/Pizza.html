@@ -12,7 +12,10 @@
 <body th:object="${pizza}" class="text-center pb-3">
    
    <div th:replace="frag :: show()"></div>
-   
+   <div class="p-4" th:if="*{promotion}">
+          <h3>Promozioni attive: [[*{promotion.name}]]</h3>
+          <span>Data inizio: [[*{promotion.startDate}]] / Data fine: [[*{promotion.finishDate}]]</span>
+      </div>
    
    <button class="btn btn-success">
        <a style="text-decoration: none" class="text-white ms_text_decoration" href="/pizza">HomePage</a>
