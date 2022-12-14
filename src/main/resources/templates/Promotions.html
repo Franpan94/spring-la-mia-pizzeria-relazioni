@@ -24,7 +24,8 @@
                   <th scope="col">Id</th>
                   <th scope="col">Nome</th>
                   <th scope="col" class="text-center">Pizze in promozione</th>
-                  <th class="text-end" scope="col">Data inizio/Data fine</th>
+                  <th class="text-center" scope="col">Data inizio/Data fine</th>
+                  <th class="text-end" scope="col">Modifica/Elimina</th>
                 </tr>
               </thead>
               <tbody>
@@ -36,13 +37,22 @@
                     <td class="text-center">
 						<span  th:each="pizza : ${promotion.pizze}">  [[${pizza.name}]], </span>
 					</td>
-                    <td class="text-end">
+                    <td class="text-center">
                        <span>[[*{startDate}]] / [[*{finishDate}]]</span>
                      </td>
-                     
+                     <td class="text-end">
+                       <button class="btn btn-warning">
+                         <a style="text-decoration: none" class="text-dark ms_text_decoration" th:href="@{/promotion/edit/{id} (id=*{id})}">Modifica la tua promozione</a>
+                       </button>
+                       <button class="btn btn-danger">
+                         <a style="text-decoration: none" class="text-white ms_text_decoration" th:href="@{/promotion/delete/{id} (id=*{id})}">Elimina</a>
+                       </button>
+                     </td>
                  </tr>
                </tbody>  
            </table>
+              <h4 class="p-5 text-center" th:if="${promotions.size() < 1}">Non sono presenti promozioni al momento</h4>
+           
          </div>
       </div>
    </div>

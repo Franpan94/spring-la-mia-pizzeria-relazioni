@@ -127,6 +127,18 @@ public class Pizzeria implements PriceableInt {
     public List<Ingredient> getIngredients() {
 		return ingredients;
 	}
+    public void addIngredients(Ingredient ingredient) {
+		
+		boolean finded = false;
+		for (Ingredient i : getIngredients()) 
+			if (i.getId() == ingredient.getId())
+				finded = true;
+		
+		if (!finded) 
+			getIngredients().add(ingredient);
+	}
+    
+    
 
 	public void setIngredients(List<Ingredient> ingredients) {
 		this.ingredients = ingredients;

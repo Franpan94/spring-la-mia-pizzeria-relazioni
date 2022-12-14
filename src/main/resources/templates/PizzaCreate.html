@@ -26,8 +26,20 @@
 					      th:field="${pizza.promotion}"
 			      >[[*{name}]]
 			      </option>		
-	            </select> 
-                <div class="pt-3 text-center">
+	            </select><br>
+	            <label class="pt-3 pb-2">Ingredienti:</label><br>
+                <div th:each="ingredient : ${ingredients}"
+                     th:object="${ingredient}"
+                     class="mb-3"
+                >
+                   <input type="checkbox" 
+                          name="ingredients"
+                          th:value="*{id}" 
+                          th:field="${pizza.ingredients}"
+                   >             
+                   <label>[[*{name}]]</label>
+                </div>
+                <div class="pt-3 pb-3 text-center">
                    <button type="submit" class="btn btn-primary text-white">Aggiungi</button>
                    <button class="btn btn-success text-white"> 
                       <a style="text-decoration: none" href="/pizza" class="text-white">HomePage</a>

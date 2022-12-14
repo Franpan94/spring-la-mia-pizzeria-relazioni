@@ -83,12 +83,11 @@ public class PromotionController {
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 		
-		Optional<Pizzeria> optPizza = prs.findPizzaId(id);
-		Pizzeria pizza = optPizza.get();
-		model.addAttribute("pizza", pizza);
+		List<Pizzeria> pizze = prs.findAll();
+		model.addAttribute("pizze", pizze);
 		
-		List<Promotion> promotions = prts.findAllWithPizza();
-		model.addAttribute("promotions", promotions);
+		Optional<Promotion> promotion = prts.findById(id);
+		model.addAttribute("promotion", promotion);
 		
 		return "PromotionEdit";
 	}

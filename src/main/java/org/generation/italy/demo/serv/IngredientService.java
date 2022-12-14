@@ -1,7 +1,6 @@
 package org.generation.italy.demo.serv;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.generation.italy.demo.pojo.Ingredient;
 import org.generation.italy.demo.repo.IngredientRepo;
@@ -44,8 +43,13 @@ public class IngredientService {
 		ingredientRepo.delete(ingredient);
 	}
 	
-	public Optional<Ingredient> findById(int id){
+	public Ingredient findById(int id){
 		
-		return ingredientRepo.findById(id);
+		return ingredientRepo.findById(id).get();
+	}
+	
+	public void deleteById(int id) {
+		
+		ingredientRepo.deleteById(id);
 	}
 }

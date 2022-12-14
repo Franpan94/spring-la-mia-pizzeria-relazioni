@@ -1,11 +1,9 @@
 package org.generation.italy.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.generation.italy.demo.pojo.Ingredient;
 import org.generation.italy.demo.pojo.Pizzeria;
-import org.generation.italy.demo.pojo.Promotion;
 import org.generation.italy.demo.serv.IngredientService;
 import org.generation.italy.demo.serv.PizzeriaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,60 +51,68 @@ public class IngredientController {
 	
 	@PostMapping("/store")
 	public String store(@Valid Ingredient ingredient,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-		
-		if(bindingResult.hasErrors()) {
+				BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 			
-			redirectAttributes.addFlashAttribute("errors", bindingResult.hasErrors());
-			return "redirect:/ingredient/create";
-		}
-		
-		try {
-			
-			List<Pizzeria> ingregredientPizze = ingredient.getPizze();
-			for(Pizzeria pizza : ingregredientPizze) {
+			if(bindingResult.hasErrors()) {
 				
-				pizza.getIngredients().add(ingredient);
+				redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+				return "redirect:/ingredient/create";
 			}
 			
-			ingredientServ.save(ingredient);
-			
-		}catch (Exception e) {
-			
-			String message = "Il nome deve essere unico";
-			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:/ingredient/create";
-		}
-		
-		return "redirect:/ingredient";
+			try {
+				
+				List<Pizzeria> ingregredientPizze = ingredient.getPizze();
+				for(Pizzeria pizza : ingregredientPizze) {
+					
+					pizza.getIngredients().add(ingredient);
+				}
+				
+				ingredientServ.save(ingredient);
+				
+			}catch (Exception e) {
+				
+				String message = "Il nome deve essere unico";
+				redirectAttributes.addFlashAttribute("message", message);
+				return "redirect:/ingredient/create";
+			}
+			return "redirect:/ingredient";
 	}
 	
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable("id") int id, Model model) {
 		
-		Optional<Pizzeria> optPizza = pizzeriaServ.findPizzaId(id);
-		Pizzeria pizza = optPizza.get();
-		model.addAttribute("pizza", pizza);
+		List<Pizzeria> pizze = pizzeriaServ.findAll();
+		model.addAttribute("pizze", pizze);
 		
-		List<Ingredient> ingredients = ingredientServ.findAllWithPizza();
-		model.addAttribute("ingredients", ingredients);
+		
+		Ingredient ingredient = ingredientServ.findById(id);
+		model.addAttribute("ingredient", ingredient);
 		
 		return "IngredientEdit";
 	}
 	
-	@PostMapping("/update")
-	public String update(@Valid Ingredient ingredient,
+	@PostMapping("/update/{id}")
+	public String update(@PathVariable("id") int id, @Valid Ingredient ingredient,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if(bindingResult.hasErrors()) {
 			
-			redirectAttributes.addFlashAttribute("errors", redirectAttributes);
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			
 			return "redirect:/ingredient/edit" + ingredient.getId();
 		}
 		
 		try {
 			
+			Ingredient oldIngredient = ingredientServ.findById(id);
+			for(Pizzeria pizza : oldIngredient.getPizze()) {
+				pizza.getIngredients().remove(oldIngredient);
+			}
+			
+		    List<Pizzeria> pizzeIngredient = ingredient.getPizze();
+			for(Pizzeria pzz : pizzeIngredient) {
+				pzz.addIngredients(ingredient);
+			}
 			ingredientServ.save(ingredient);
 		
 		}catch (Exception e) {
@@ -125,9 +131,7 @@ public class IngredientController {
 		
         try {
 			
-			Optional<Ingredient> optIngredient = ingredientServ.findById(id);
-			Ingredient ingredient = optIngredient.get();
-			ingredientServ.delete(ingredient);
+			ingredientServ.deleteById(id);
 			
 		} catch(Exception e) {
 			

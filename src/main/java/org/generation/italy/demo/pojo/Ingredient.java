@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 
 
@@ -23,7 +24,8 @@ public class Ingredient {
 	private int id;
 	
 	@NotEmpty(message = "Il nome non può essere vuoto")
-	@Column
+	@Size(min = 3, message = "Il nome deve contenere almeno 3 caratteri")
+	@Column(unique = true)
 	private String name;
 	
 	@ManyToMany(mappedBy = "ingredients", cascade = CascadeType.REMOVE)
