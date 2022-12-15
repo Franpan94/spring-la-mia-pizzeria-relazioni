@@ -56,7 +56,7 @@ public class PromotionController {
 		
         if(bindingResult.hasErrors()) {
 			
-			redirectAttributes.addFlashAttribute("errors", bindingResult.hasErrors());
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			return "redirect:/promotion/create";
 		}
 		
@@ -74,6 +74,7 @@ public class PromotionController {
 
 			String message = "Il nome deve essere unico";
 			redirectAttributes.addFlashAttribute("message", message);
+			
 			return "redirect:/promotion/create";
 		}
         
@@ -100,18 +101,25 @@ public class PromotionController {
 			
 			redirectAttributes.addFlashAttribute("errors", redirectAttributes);
 			
-			return "redirect:/promotion/edit" + promotion.getId();
+			return "redirect:/promotion/edit/" + promotion.getId();
 		}
 		
 		try {
+	        
+			List<Pizzeria> pizze = promotion.getPizze();
+	        
+	        for(Pizzeria p : pizze) {
+	        	p.setPromotion(promotion);
+	        }
 			
-			prts.save(promotion);
+	        prts.save(promotion);
 		
 		}catch (Exception e) {
 
 			String message = "Il nome deve essere unico";
 			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:/promotion/edit" + promotion.getId();
+			
+			return "redirect:/promotion/edit/" + promotion.getId();
 		}
 		
 		return "redirect:/promotion";

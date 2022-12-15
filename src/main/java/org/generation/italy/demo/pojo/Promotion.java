@@ -34,7 +34,7 @@ public class Promotion {
     private List<Pizzeria> pizze;
     
     @NotEmpty(message = "Il nome deve contenere qualcosa")
-    @Column
+    @Column(unique = true)
     String name;
     
     public Promotion() {

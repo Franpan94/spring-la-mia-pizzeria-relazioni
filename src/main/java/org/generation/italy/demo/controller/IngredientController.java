@@ -99,7 +99,7 @@ public class IngredientController {
 			
 			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			
-			return "redirect:/ingredient/edit" + ingredient.getId();
+			return "redirect:/ingredient/edit/" + id;
 		}
 		
 		try {
@@ -119,7 +119,7 @@ public class IngredientController {
 
 			String message = "Il nome deve essere unico";
 			redirectAttributes.addFlashAttribute("message", message);
-			return "redirect:/ingredient/edit" + ingredient.getId();
+			return "redirect:/ingredient/edit/" + id;
 		}
 		
 		return "redirect:/ingredient";
