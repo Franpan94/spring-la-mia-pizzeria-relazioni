@@ -13,6 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table
@@ -34,6 +35,7 @@ public class Promotion {
     private List<Pizzeria> pizze;
     
     @NotEmpty(message = "Il nome deve contenere qualcosa")
+    @Size(min = 5, message = "Il nome deve contenere almeno 5 caratteri")
     @Column(unique = true)
     String name;
     

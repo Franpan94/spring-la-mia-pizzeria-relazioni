@@ -9,12 +9,13 @@
 </head>
 <body>
   <div th:replace="frag :: errors()"></div>
+ 
   <div class="container">
    <div class="row">
       <div class="col">
           <h1 class="text-center p-3">Modifica la tua promozione</h1>
           <form method="POST" action="/promotion/update" th:object="${promotion}">
-          
+           
              <input type="number" name="id" th:field="*{id}" style="display:none">
              <label for="exampleInputEmail1" class="form-label">Nome</label>
              <input type="text" name="name" class="form-control" id="exampleInputEmail1" 

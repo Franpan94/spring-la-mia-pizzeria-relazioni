@@ -99,7 +99,7 @@ public class PromotionController {
 		
 		if(bindingResult.hasErrors()) {
 			
-			redirectAttributes.addFlashAttribute("errors", redirectAttributes);
+			redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 			
 			return "redirect:/promotion/edit/" + promotion.getId();
 		}
@@ -120,6 +120,8 @@ public class PromotionController {
 			redirectAttributes.addFlashAttribute("message", message);
 			
 			return "redirect:/promotion/edit/" + promotion.getId();
+			
+			
 		}
 		
 		return "redirect:/promotion";
