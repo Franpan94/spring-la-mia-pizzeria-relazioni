@@ -130,7 +130,11 @@ public class IngredientController {
 			RedirectAttributes redirectAttributes) {
 		
         try {
+			Ingredient ingredient = ingredientServ.findById(id);
 			
+			for(Pizzeria p : ingredient.getPizze()) {
+				p.removeIngredient(ingredient);
+			}
 			ingredientServ.deleteById(id);
 			
 		} catch(Exception e) {
