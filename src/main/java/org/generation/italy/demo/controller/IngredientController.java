@@ -133,7 +133,7 @@ public class IngredientController {
 			Ingredient ingredient = ingredientServ.findById(id);
 			
 			for(Pizzeria p : ingredient.getPizze()) {
-				p.removeIngredient(ingredient);
+				p.getIngredients().remove(ingredient);
 			}
 			ingredientServ.deleteById(id);
 			
